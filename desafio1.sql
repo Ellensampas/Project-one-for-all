@@ -119,8 +119,11 @@ DROP DATABASE IF EXISTS SpotifyClone;
     (4, 4),
     (5, 5),
     (5, 6),
+    (6, NULL)
     (7, 6),
-    (9, 3);
+    (8, NULL),
+    (9, 3)
+    (10, NULL);
 
   INSERT INTO SpotifyClone.historico (usuario_id, musica_id, data_reproducao)
   VALUES
