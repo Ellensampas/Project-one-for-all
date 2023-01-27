@@ -2,56 +2,54 @@ DROP DATABASE IF EXISTS SpotifyClone;
 CREATE DATABASE SpotifyClone;
 
   CREATE TABLE SpotifyClone.plano(
-      plano_id INT PRIMARY KEY AUTO_INCREMENT,
+      plano_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       tipo_plano VARCHAR(90) NOT NULL,
-      valor_plano DECIMAL(3,2) NOT NULL
+      valor_plano DECIMAL(3 , 2) NOT NULL
   );
 
   CREATE TABLE SpotifyClone.artista(
-      artista_id INT AUTO_INCREMENT PRIMARY KEY,
+      artista_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       nome_artista VARCHAR(90) NOT NULL
   );
 
   CREATE TABLE SpotifyClone.album(
-      album_id INT PRIMARY KEY AUTO_INCREMENT,
+      album_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       nome_album VARCHAR(90) NOT NULL,
       artista_id INT NOT NULL,
-      ano_lancamento YEAR(4) NOT NULL,
       FOREIGN KEY (artista_id) REFERENCES SpotifyClone.artista(artista_id)
   );
 
   CREATE TABLE SpotifyClone.musicas(
-      musica_id INT PRIMARY KEY AUTO_INCREMENT,
+      musica_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       titulo VARCHAR(90) NOT NULL,
       album_id INT NOT NULL,
+      ano_lancamento INT NOT NULL,
       duracao_segundos INT NOT NULL,
       FOREIGN KEY (album_id) REFERENCES SpotifyClone.album(album_id)
   );
 
   CREATE TABLE SpotifyClone.usuario(
-      usuario_id INT PRIMARY KEY AUTO_INCREMENT,
+      usuario_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       nome_usuario VARCHAR(90) NOT NULL,
       idade_usuario INT NOT NULL,
       plano_id INT NOT NULL,
-      data_assinatura DATE NOT NULL,
+      data_assinatura DATE,
       FOREIGN KEY (plano_id) REFERENCES SpotifyClone.plano(plano_id)
   );
 
   CREATE TABLE SpotifyClone.artistas_seguidos(
-      seguidos_id INT AUTO_INCREMENT,
-      artista_id INT,
+      artista_id INT NOT NULL,
       usuario_id INT NOT NULL,
-      PRIMARY KEY (seguidos_id, artista_id, usuario_id),
+      PRIMARY KEY (artista_id, usuario_id),
       FOREIGN KEY (artista_id) REFERENCES SpotifyClone.artista(artista_id),
       FOREIGN KEY (usuario_id) REFERENCES SpotifyClone.usuario(usuario_id)
   );
 
   CREATE TABLE SpotifyClone.historico(
-      historico_id INT AUTO_INCREMENT,
       usuario_id INT NOT NULL,
       musica_id INT NOT NULL,
-      data_reproducao DATETIME(20) NOT NULL,
-      PRIMARY KEY (historico_id, usuario_id, musica_id),
+      data_reproducao DATETIME,
+      PRIMARY KEY (usuario_id, musica_id),
       FOREIGN KEY (usuario_id) REFERENCES SpotifyClone.usuario(usuario_id),
       FOREIGN KEY (musica_id) REFERENCES SpotifyClone.musica(musica_id)
   );
